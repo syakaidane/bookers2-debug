@@ -6,6 +6,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
     @book_comment = BookComment.new
+    impressionist(@book, nil, :unique => [:ip_address])
   end
 
   def index
@@ -16,6 +17,7 @@ class BooksController < ApplicationController
         x.favorited_users.includes(:favorites).where(created_at: from...to).size
       }.reverse
     @book = Book.new
+    @user = current_user
   end
 
   def create
